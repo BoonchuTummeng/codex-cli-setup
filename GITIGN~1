@@ -1,0 +1,15 @@
+# ระบบปฏิบัติการ
+.DS_Store
+Thumbs.db
+
+# ไฟล์ชั่วคราว / log
+*.log
+*.tmp
+
+# โฟลเดอร์ dependency
+node_modules/
+
+# ไฟล์ลับ — อย่า commit ขึ้น GitHub เด็ดขาด
+.env
+*.key
+*secret*
