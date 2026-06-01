@@ -50,11 +50,23 @@ npm --version
 git --version
 ```
 
+### ⚠️ ขั้นที่ 6.5 — ปลดล็อกการรันสคริปต์ (สำคัญมาก! ถ้าข้ามจะ error)
+โดยปกติ Windows บล็อกการรันสคริปต์ ทำให้พิมพ์ `npm` แล้วขึ้น error
+`npm.ps1 cannot be loaded because running scripts is disabled`
+ให้รันคำสั่งนี้ **ครั้งเดียวพอ** (ปลดล็อกถาวร ปลอดภัย ไม่ต้องเป็น admin):
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+```
+> ถ้ามันถามให้ยืนยัน ให้พิมพ์ `Y` แล้ว Enter
+> คำสั่งนี้ทำให้ทั้ง `npm` และ `codex` รันได้ทั้งตอนนี้และครั้งต่อๆ ไป
+
 ### ขั้นที่ 7 — ติดตั้ง Codex CLI
 ```powershell
 npm install -g @openai/codex
 ```
 > ⚠️ ต้องเป็น `@openai/codex` เท่านั้น — ถ้าพิมพ์ `codex` เปล่าๆ จะได้คนละโปรแกรม
+>
+> ถ้ายังขึ้น error เรื่อง "running scripts is disabled" แปลว่าข้ามขั้นที่ 6.5 — ให้ย้อนกลับไปรันคำสั่ง Set-ExecutionPolicy ก่อน
 
 ### ขั้นที่ 8 — เริ่มใช้งาน + login
 ```powershell
@@ -117,7 +129,9 @@ codex
 | พิมพ์ `codex` แล้วขึ้น "command not found" | ปิดแล้วเปิด Terminal/PowerShell ใหม่ ให้ระบบโหลด PATH ใหม่ |
 | ติดตั้งแล้วได้โปรแกรมแปลกๆ ไม่ใช่ Codex | ติดตั้งผิดแพ็กเกจ ต้องเป็น `@openai/codex` ไม่ใช่ `codex` |
 | `npm: command not found` | Node.js ยังติดตั้งไม่สมบูรณ์ หรือยังไม่เปิดหน้าต่างใหม่ |
-| Windows รันสคริปต์ .ps1 ไม่ได้ | รัน `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force` ก่อน |
+| **`npm.ps1 cannot be loaded ... running scripts is disabled`** (PSSecurityException) | **พบบ่อยสุด!** Windows บล็อกสคริปต์ — รัน `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force` ครั้งเดียว แล้วลองใหม่ (ดูขั้นที่ 6.5) |
+| Windows รันสคริปต์ .ps1 (install-windows.ps1) ไม่ได้ | รัน `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force` ก่อนเรียกสคริปต์ |
+| ไม่อยากแก้ execution policy | ใช้ `npm.cmd install -g @openai/codex` แทน (ลงท้าย .cmd จะไม่โดนบล็อก) |
 | login ไม่ได้ / ใช้ Codex ไม่ได้ | ตรวจว่าสมัคร ChatGPT แล้ว (ขั้นที่ 0) และลองใหม่ในเบราว์เซอร์ |
 | ใช้ไปสักพักแล้วโดนจำกัด | แผนฟรีมีลิมิตเป็นรอบ (rolling 5 ชม.) รอรอบใหม่ หรืออัปเป็น Plus |
 

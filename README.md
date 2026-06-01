@@ -75,6 +75,18 @@ chmod +x install-mac.sh
 
 ---
 
+## ⚠️ เจอ error ตอน `npm install` บน Windows? (พบบ่อยสุด)
+
+ถ้าขึ้นว่า **`npm.ps1 cannot be loaded because running scripts is disabled`** (PSSecurityException)
+แปลว่า Windows บล็อกการรันสคริปต์ ให้รันคำสั่งนี้ใน PowerShell **ครั้งเดียว** แล้วลองใหม่:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+```
+
+(ปลดล็อกถาวร ปลอดภัย ไม่ต้องเป็น admin — ทำให้ทั้ง `npm` และ `codex` รันได้)
+ถ้าถามให้ยืนยันให้พิมพ์ `Y` แล้ว Enter
+
 ## ถ้าสคริปต์มีปัญหา
 
 เปิด **`GUIDE-TH.md`** แล้วทำมือทีละขั้นตาม — มีอธิบายทุกบรรทัดและวิธีแก้ปัญหาที่พบบ่อย
